@@ -14,6 +14,7 @@ use App\Services\DbConfig;
 use App\Services\Logger;
 use App\Utils\Check;
 use App\Utils\Http;
+use App\Utils\ClientIP;
 
 /**
  *  HomeController
@@ -64,4 +65,22 @@ class HomeController extends BaseController
         return $this->echoJson($response, $res);
     }
 
+    public function ip($request, $response, $args)
+    {
+        $realip = ClientIP::getClientAddress();
+        $ipinfo = ClientIP::getIpDetail($realip);
+
+        return $this->view()->assign(
+                                'urls', 
+                                array( 
+                                 'Google(CDN)' => 'https://www.google.com', 
+                                 'Google(IS)'  => 'https://www.google.is', 
+                                 'Google(JP)'  => 'https://www.google.co.jp',
+                                 'Tumblr'  => 'https://www.tumblr.com',
+                                 'Amazon(DE)'  => 'https://www.amazon.de'
+                                )
+                              )->assign('ipinfo', $ipinfo)->display('ip.tpl');
+
+        //return $this->view()->assign('ipinfo', $ipinfo)->display('ip.tpl');
+    }
 }

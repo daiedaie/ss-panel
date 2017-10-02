@@ -1,0 +1,72 @@
+[02-Oct-2017 16:43:42 UTC] PHP Warning:  PHP Startup: geoip: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 16:43:42 UTC] PHP Warning:  PHP Startup: msgpack: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 16:43:42 UTC] PHP Warning:  PHP Startup: geoip: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 16:43:42 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[02-Oct-2017 16:43:42 UTC] PHP Warning:  PHP Startup: msgpack: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 16:43:42 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[02-Oct-2017 16:43:42 UTC] PHP Warning:  Module 'swoole' already loaded in Unknown on line 0
+[02-Oct-2017 16:43:42 UTC] PHP Warning:  Module 'yaf' already loaded in Unknown on line 0
+[02-Oct-2017 16:44:51 UTC] PHP Warning:  PHP Startup: geoip: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 16:44:51 UTC] PHP Warning:  PHP Startup: msgpack: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 16:44:51 UTC] PHP Warning:  PHP Startup: geoip: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 16:44:51 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[02-Oct-2017 16:44:51 UTC] PHP Warning:  PHP Startup: msgpack: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 16:44:51 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[02-Oct-2017 16:44:51 UTC] PHP Warning:  Module 'swoole' already loaded in Unknown on line 0
+[02-Oct-2017 16:44:51 UTC] PHP Warning:  Module 'yaf' already loaded in Unknown on line 0
+[02-Oct-2017 17:04:26 UTC] PHP Warning:  PHP Startup: geoip: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 17:04:26 UTC] PHP Warning:  PHP Startup: msgpack: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 17:04:26 UTC] PHP Warning:  PHP Startup: geoip: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 17:04:26 UTC] PHP Warning:  Module 'igbinary' already loaded in Unknown on line 0
+[02-Oct-2017 17:04:26 UTC] PHP Warning:  PHP Startup: msgpack: Unable to initialize module
+Module compiled with build ID=API20160303,NTS
+PHP    compiled with build ID=API20160303,NTS,debug
+These options need to match
+ in Unknown on line 0
+[02-Oct-2017 17:04:26 UTC] PHP Warning:  Module 'redis' already loaded in Unknown on line 0
+[02-Oct-2017 17:04:26 UTC] PHP Warning:  Module 'swoole' already loaded in Unknown on line 0
+[02-Oct-2017 17:04:26 UTC] PHP Warning:  Module 'yaf' already loaded in Unknown on line 0

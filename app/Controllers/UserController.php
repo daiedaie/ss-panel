@@ -156,7 +156,7 @@ class UserController extends BaseController
         $user = Auth::getUser();
         $pwd = $request->getParam('sspwd');
         if (strlen($pwd) == 0) {
-            $pwd = Tools::genRandomChar(8);
+            $pwd = Tools::genRandomChar(15);  // cn2 mod 8 -> 15
         } elseif (strlen($pwd) < 5) {
             $res['ret'] = 0;
             $res['msg'] = "密码要大于4位或者留空生成随机密码";

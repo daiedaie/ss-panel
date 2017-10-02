@@ -127,6 +127,7 @@
                             </div>
 
                         </div>
+                        <div class="callout callout-info">本页面目前不支持 "协议(protocal)" 和 "混淆(obfs)" 的自定义，如果您的客户端需要配置这两项内容，请分别填写 origin 和 plain , "加密方式(encrypt_method)"填写上面的加密方式内容即可. </div>
                         <div class="box-footer"></div>
                     </div>
                     <!-- /.box-body -->

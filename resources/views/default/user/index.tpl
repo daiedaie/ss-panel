@@ -109,9 +109,14 @@
                             <dd>{$user->passwd}</dd>
                             <dt>自定义加密方式</dt>
                             <dd>{$user->method}</dd>
+                            <dt>协议(protocol)</dt>
+                            <dd>origin  <code>可选</code></dd>
+                            <dt>混淆(obfs)</dt>
+                            <dd>plain  <code>可选</code></dd>
                             <dt>上次使用</dt>
                             <dd>{$user->lastSsTime()}</dd>
                         </dl>
+                        <div class="callout callout-info">注意： protocol 和 obfs 两项， 仅支持混淆的客户端需要填写。  </div>
                     </div>
                     <!-- /.box-body -->
                 </div>

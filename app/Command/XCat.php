@@ -68,7 +68,7 @@ class XCat
             $user->user_name = "admin";
             $user->email = $email;
             $user->pass = Hash::passwordHash($passwd);
-            $user->passwd = Tools::genRandomChar(6);
+            $user->passwd = Tools::genRandomChar(15);  // cn2 mod 8 -> 15
             $user->port = Tools::getLastPort() + 1;
             $user->t = 0;
             $user->u = 0;

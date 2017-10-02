@@ -6,7 +6,7 @@
     </div>
 
     <div class="register-box-body">
-        <p class="login-box-msg">注册，然后变成一只猫。</p>
+        <p class="login-box-msg">欲翻墙，注册一下。</p>
 
         <div class="form-group has-feedback">
             <input type="text" id="name" class="form-control" placeholder="昵称"/>
@@ -40,7 +40,7 @@
         </div>
 
         <div class="form-group has-feedback">
-            <input type="text" id="code" value="{$code}" class="form-control" placeholder="邀请码"/>
+            <input type="text" id="code" value="{$code}" class="form-control" placeholder="邀请码（请在首页查找）"/>
             <span class="glyphicon glyphicon-send form-control-feedback"></span>
         </div>
 
