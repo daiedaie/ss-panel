@@ -27,7 +27,7 @@ class TestController extends AdminController
                 "ret" => 1,
                 "msg" => "ok"
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $res = [
                 "ret" => 0,
                 "msg" => $e->getMessage()

@@ -22,7 +22,7 @@ class PasswordController extends BaseController
     public function handleReset($request, $response, $args)
     {
         $email = $request->getParam('email');
-        // check limit
+        // @TODO check limit
 
         // send email
         $user = User::where('email', $email)->first();

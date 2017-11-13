@@ -44,7 +44,7 @@ class ClientIP
  * Ensures an ip address is both a valid IP and does not fall within
  * a private network range.
  */
-private static function validate_ip($ip) {
+private static function isValidClientAddress($ip) {
     if (strtolower($ip) === 'unknown')
         return false;
 
@@ -74,7 +74,7 @@ private static function validate_ip($ip) {
 */
 public static function getClientAddress() {
     // check for shared internet/ISP IP
-    if (!empty($_SERVER['HTTP_CLIENT_IP']) && validate_ip($_SERVER['HTTP_CLIENT_IP'])) {
+    if (!empty($_SERVER['HTTP_CLIENT_IP']) && self::isValidClientAddress($_SERVER['HTTP_CLIENT_IP'])) {
         return $_SERVER['HTTP_CLIENT_IP'];
     }
 
@@ -84,59 +84,31 @@ public static function getClientAddress() {
         if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',') !== false) {
             $iplist = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
             foreach ($iplist as $ip) {
-                if (validate_ip($ip))
+                if (self::isValidClientAddress($ip))
                     return $ip;
             }
         } else {
-            if (validate_ip($_SERVER['HTTP_X_FORWARDED_FOR']))
+            if (self::isValidClientAddress($_SERVER['HTTP_X_FORWARDED_FOR']))
                 return $_SERVER['HTTP_X_FORWARDED_FOR'];
         }
     }
-    if (!empty($_SERVER['HTTP_X_FORWARDED']) && validate_ip($_SERVER['HTTP_X_FORWARDED']))
+    if (!empty($_SERVER['HTTP_X_FORWARDED']) && self::isValidClientAddress($_SERVER['HTTP_X_FORWARDED']))
         return $_SERVER['HTTP_X_FORWARDED'];
-    if (!empty($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']) && validate_ip($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']))
+    if (!empty($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']) && self::isValidClientAddress($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']))
         return $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'];
-    if (!empty($_SERVER['HTTP_FORWARDED_FOR']) && validate_ip($_SERVER['HTTP_FORWARDED_FOR']))
+    if (!empty($_SERVER['HTTP_FORWARDED_FOR']) && self::isValidClientAddress($_SERVER['HTTP_FORWARDED_FOR']))
         return $_SERVER['HTTP_FORWARDED_FOR'];
-    if (!empty($_SERVER['HTTP_FORWARDED']) && validate_ip($_SERVER['HTTP_FORWARDED']))
+    if (!empty($_SERVER['HTTP_FORWARDED']) && self::isValidClientAddress($_SERVER['HTTP_FORWARDED']))
         return $_SERVER['HTTP_FORWARDED'];
-
+    
+    	
     // return unreliable ip since all else failed
     return $_SERVER['REMOTE_ADDR'];
 }
 
 
-private static function getrealip() {
-  if (isset($_SERVER)){
-    if(isset($_SERVER["HTTP_X_FORWARDED_FOR"])){
-      $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-      if(strpos($ip,",")){
-        $exp_ip = explode(",",$ip);
-        $ip = $exp_ip[0];
-      }
-    } else if(isset($_SERVER["HTTP_CLIENT_IP"])){
-      $ip = $_SERVER["HTTP_CLIENT_IP"];
-    }else{
-      $ip = $_SERVER["REMOTE_ADDR"];
-    }
-  }else{
-    if(getenv('HTTP_X_FORWARDED_FOR')){
-      $ip = getenv('HTTP_X_FORWARDED_FOR');
-      if(strpos($ip,",")){
-        $exp_ip=explode(",",$ip);
-        $ip = $exp_ip[0];
-      }
-    }else if(getenv('HTTP_CLIENT_IP')){
-      $ip = getenv('HTTP_CLIENT_IP');
-    }else {
-      $ip = getenv('REMOTE_ADDR');
-    }
-  }
-  return $ip; 
-}
 
-
-public static function getIpDetail($ip) {
+/*public static function getIpDetail($ip) {
 //  $realip = get_ip_address();
 //  $realip2 = getrealip();
   // 
@@ -170,7 +142,21 @@ public static function getIpDetail($ip) {
   //       curl_close($conn[$i]);
   // }
   
-  $detail = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+	
+    // $detail = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+    $ch = curl_init();
+    curl_setopt($ch,CURLOPT_URL,"http://ipinfo.io/{$ip}/json");
+    curl_setopt($ch,CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+    
+    $rs = curl_exec($ch);
+    curl_close($ch);
+    if (false == $rs) {
+    	die(curl_error($ch));;
+    }
+    
+    $detail = json_decode($rs);   
+  
   
   return $detail ;
   
@@ -185,7 +171,8 @@ public static function getIpDetail($ip) {
 //  if (in_array($origin, $allowOrigin)) {
 //      header('Access-Control-Allow-Origin: ' . $origin);
 //  }
-}   
+}  
+*/ 
   
 }
   

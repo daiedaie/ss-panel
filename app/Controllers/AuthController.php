@@ -69,7 +69,7 @@ class AuthController extends BaseController
         if ($rememberMe) {
             $time = 3600 * 24 * 7;
         }
-        Logger::info("login user $user->id ");
+        Logger::info("login user $user->id $user->user_name");
         Auth::login($user->id, $time);
 
         $res['ret'] = 1;

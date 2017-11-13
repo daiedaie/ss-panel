@@ -120,6 +120,31 @@
                                             </select>  
                                         </div>
                                     </div>
+                                    
+                         
+		                            <!-- protocol -->
+		                            <div class="form-group">
+		                                <label class="col-sm-3 control-label">协议插件</label>
+		                                <div class="col-sm-9">
+	                                        <select class="form-control" id="protocol">
+	                                        {foreach $protocol as $proto_desc => $proto}
+	                                           <option value="{$proto}" {if $user->protocol==$proto}selected="selected"{/if} >{$proto_desc}</option>  
+	                                        {/foreach}
+	                                        </select>  
+		                                </div>
+		                            </div>
+		
+		                            <!-- obfs -->
+		                            <div class="form-group">
+		                                <label class="col-sm-3 control-label">混淆插件</label>
+		                                <div class="col-sm-9">
+	                                        <select class="form-control" id="obfs">
+	                                        {foreach $obfs as $ob_desc => $ob}
+	                                           <option value="{$ob}" {if $user->obfs==$ob}selected="selected"{/if} >{$ob_desc}</option>  
+	                                        {/foreach}
+	                                        </select>  
+		                                </div>
+		                            </div>
                                 </fieldset>
                             </div>
                             <div class="row">
@@ -201,6 +226,8 @@
                     transfer_enable: $("#transfer_enable").val(),
                     invite_num: $("#invite_num").val(),
                     method: $("#method").val(),
+                    protocol: $("#protocol").val(),
+                    obfs: $("#obfs").val(),
                     enable: $("#enable").val(),
                     is_admin: $("#is_admin").val(),
                     ref_by: $("#ref_by").val()

@@ -12,6 +12,7 @@ class Config extends PongtanConfig
         return [
             "appName" => self::getAppName(),
             "version" => self::get("version"),
+            "slogan" => self::get("slogan"),
             "baseUrl" => self::get("baseUrl"),
             "checkinTime" => self::get("checkinTime"),
             "checkinMin" => self::get("checkinMin"),

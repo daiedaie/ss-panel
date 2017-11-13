@@ -110,9 +110,9 @@
                             <dt>自定义加密方式</dt>
                             <dd>{$user->method}</dd>
                             <dt>协议(protocol)</dt>
-                            <dd>origin  <code>可选</code></dd>
+                            <dd>{$user->protocol}<code>可选</code></dd>
                             <dt>混淆(obfs)</dt>
-                            <dd>plain  <code>可选</code></dd>
+                            <dd>{$user->obfs}<code>可选</code></dd>
                             <dt>上次使用</dt>
                             <dd>{$user->lastSsTime()}</dd>
                         </dl>

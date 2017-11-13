@@ -37,6 +37,7 @@ class User extends Model
      */
     protected $hidden = ['pass', 'last_get_gift_time', 'last_rest_pass_time', 'reg_ip', 'is_email_verify', 'user_name', 'ref_by', 'is_admin'];
 
+    /// ????
     public function getGravatarAttribute()
     {
         $hash = md5(strtolower(trim($this->attributes['email'])));
@@ -86,7 +87,19 @@ class User extends Model
         $this->method = $method;
         $this->save();
     }
-
+    
+	public function updateSSRProtocol($SSRProtocol) 
+	{
+		$this->protocol = $SSRProtocol;
+		$this->save ();
+	}
+	
+	public function updateSSRobfs($SSRobfs) 
+	{
+		$this->obfs = $SSRobfs;
+		$this->save ();
+	}
+    		
     public function addInviteCode()
     {
         $uid = $this->attributes['id'];

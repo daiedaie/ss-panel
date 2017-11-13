@@ -20,8 +20,8 @@
 <h5 class="text-center">
   你的真实IP地址: 
   <p>
-    [ {$ipinfo->ip} ]
-    <code class="bg-success text-success text-uppercase"> {$ipinfo->country} </code>
+    [ {if isset($ip)} {$ip} {/if} ]
+    <code class="bg-success text-success text-uppercase" id="country1"></code>
   </p>
 </h5> 
 <div class="container-fluid">
@@ -38,11 +38,11 @@
       <tbody>
         <tr> 
          <td scope="row"> 国内站点 </td> 
-         <td><span class="text-primary"> {$ipinfo->ip} <code class="bg-success text-success text-uppercase"> {$ipinfo->country} </code></td> 
+         <td><span class="text-primary"> {$ip} <code class="bg-success text-success text-uppercase" id="country2"></code></td> 
         </tr>
         <tr> 
          <td scope="row"> 国外站点 </td> 
-         <td><span class="text-primary" id="ip2"></span><code class="bg-success text-success text-uppercase" id="rg2"></code></td> 
+         <td><span class="text-primary" id="ip3"></span><code class="bg-success text-success text-uppercase" id="country3"></code></td> 
         </tr>
       </tbody>
     </table>
@@ -89,13 +89,13 @@ $(function() {
       url: $(s).find("td").eq(0).find("a:first").attr("href") + "/favicon.ico",
       timeout: 5000,
       type: "GET",
-      data: {},
       dataType: "JSONP",
-      crossDomain: true,
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
+      crossDomain: true})
+      .fail(function(XMLHttpRequest, textStatus, errorThrown) {
         //alert(XMLHttpRequest.status + ":" + textStatus);
-      },
-      complete: function(XMLHttpRequest, textStatus){
+      })
+      .done(function(){})
+      .always(function(XMLHttpRequest, textStatus){
         switch(XMLHttpRequest.status) {
           case 0:
             $(s).find("td").eq(1).html("<span class='text-danger'>超时</span>");
@@ -106,27 +106,47 @@ $(function() {
             $(s).find("td").eq(1).html("<span class='text-success'>OK</span>");
             break;
           default:
-            $(s).find("td").eq(1).html("<span class='text-danger'>无法访问</span>");
+            $(s).find("td").eq(1).html("<span class='text-danger'>无法访问(" + XMLHttpRequest.status + ")</span>");
             break;
         };
-        XMLHttpRequest.abort();
-      }
+      })
     });
   })
-});
+
 
 </script>
 
 <script type="text/javascript">
-  $(function() { 
-    $.get(
-      "https://ipinfo.io/json", 
-      function(a) { 
-        $('#ip2').text(a.ip + " "); 
-        $('#rg2').text(a.country); 
+$(function() { 
+  $.get(
+    "https://ipinfo.io/json", 
+    function(a) {
+      $('#ip3').text(a.ip + " "); 
+      $('#country3').text(a.country); 
+    }
+  );
+  
+{if isset($ip)}
+  $.ajax(
+    {
+      url : 'http://ipinfo.io/{$ip}/json',
+      type: "GET",
+      dataType : "jsonp",
+      data:{},
+      timeout: 5000,
+      success : function(j) {
+        var t = "";
+        if (j.bogon == true )
+          v = "本地";
+        else 
+          v = j.country;
+          
+        $('#country1').text(v);$('#country2').text(v);
       }
-    ); 
-  }); 
+    }
+  );
+{/if}
+})
 </script>
 
 {include file='footer.tpl'}

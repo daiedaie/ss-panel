@@ -46,18 +46,56 @@ class UserController extends BaseController
         $msg = DbConfig::get('user-node');
         $user = Auth::getUser();
         $nodes = Node::where('type', 1)->orderBy('sort')->get();
-        return $this->view()->assign('nodes', $nodes)->assign('user', $user)->assign('msg', $msg)->display('user/node.tpl');
-    }
-
-
-    public function nodeInfo($request, $response, $args)
-    {
-        $id = $args['id'];
-        $node = Node::find($id);
-
-        if ($node == null) {
-
+        return $this->view()->assign('nodes', $nodes)->assign('user', $user)->assign('msg', $msg)->display ( 'user/node.tpl' );
+	}
+	
+	public function nodeInfo($request, $response, $args) 
+	{
+		$id = $args ['id'];
+		$ctype = $request->getParam('type');
+		$node = Node::find ( $id );
+		
+		if ($node == null) {
+			$res ['msg'] = "发生错误";
+		} else {
+			$ary ['server'] = $node->server;
+			$ary ['server_port'] = $this->user->port;
+			$ary ['password'] = $this->user->passwd;
+			$ary ['protocol'] = $this->user->protocol;
+			$ary ['obfs'] = $this->user->obfs;
+			$ary ['method'] = $node->method;
+			if ($node->custom_method) {
+				$ary ['method'] = $this->user->method;
+			}
+			$json = json_encode ( $ary );
+			$json_show = json_encode ( $ary, JSON_PRETTY_PRINT );
+			if ($ary['obfs'] != "" && $ary['obfs'] != "origin" && $ary['protocol'] != "" && $ary['protocol'] != "plain") {
+				// ref: https://github.com/shadowsocksrr/shadowsocks-rss/wiki/SSR-QRcode-scheme
+				$ssurl = $ary ['server'] . ":" . $ary ['server_port'] . ":" . str_replace ( "_compatible", "", $ary ['protocol'] ) . ":" . $ary ['method'] . ":" . str_replace ( "_compatible", "", $ary ['obfs'] ) . ":" . Tools::base64_url_encode ( $ary ['password'] ) . "/?&remarks=" . Tools::base64_url_encode ( $node->name );
+error_log("ssr::" . $ssurl);
+				$ssqr = "ssr://" . Tools::base64_url_encode ( $ssurl ) . "|";
+error_log($ssqr);
+			/*} elseif ($ctype == "SS") {*/
+			} else {
+				$ssurl = $ary ['method'] . ":" . $ary ['password'] . "@" . $ary ['server'] . ":" . $ary ['server_port'];
+error_log("ss::" . $ssurl);
+				$ssqr = "ss://" . Tools::base64_url_encode ( $ssurl );
+error_log($ssqr);
+			}
+			
+			$surge_base = Config::get ( 'baseUrl' ) . "/downloads/ProxyBase.conf";
+			$surge_proxy = "#!PROXY-OVERRIDE:ProxyBase.conf\n";
+			$surge_proxy .= "[Proxy]\n";
+			$surge_proxy .= "Proxy = custom," . $ary ['server'] . "," . $ary ['server_port'] . "," . $ary ['method'] . "," . $ary ['password'] . "," . Config::get ( 'baseUrl' ) . "/downloads/SSEncrypt.module";
+			$res ['json'] = $json;
+			$res ['json_show'] = $json_show;
+			$res ['ssqr'] = $ssqr;
+			$res ['surge_base'] = $surge_base;
+			$res ['surge_proxy'] = $surge_proxy;
+			$res ['ret'] = "1";
         }
+ /*
+ 
         $ary['server'] = $node->server;
         $ary['server_port'] = $this->user->port;
         $ary['password'] = $this->user->passwd;
@@ -74,6 +112,7 @@ class UserController extends BaseController
         $surge_proxy = "#!PROXY-OVERRIDE:ProxyBase.conf\n";
         $surge_proxy .= "[Proxy]\n";
         $surge_proxy .= "Proxy = custom," . $ary['server'] . "," . $ary['server_port'] . "," . $ary['method'] . "," . $ary['password'] . "," . Config::get('baseUrl') . "/downloads/SSEncrypt.module";
+ */
         return $this->view()->assign('json', $json)->assign('json_show', $json_show)->assign('ssqr', $ssqr)->assign('surge_base', $surge_base)->assign('surge_proxy', $surge_proxy)->display('user/nodeinfo.tpl');
     }
 
@@ -85,7 +124,9 @@ class UserController extends BaseController
     public function edit($request, $response, $args)
     {
         $method = Node::getCustomerMethod();
-        return $this->view()->assign('method', $method)->display('user/edit.tpl');
+        $protocol = Node::getProtocolList();
+        $obfs = Node::getObfsList();
+        return $this->view()->assign('method', $method)->assign('protocol',$protocol)->assign('obfs',$obfs)->display('user/edit.tpl');
     }
 
 
@@ -178,10 +219,28 @@ class UserController extends BaseController
         return $this->echoJson($response, $res);
     }
 
+	public function updateSSRProtocol($request, $response, $args) 
+	{
+		$user = Auth::getUser ();
+		$SSRProtocol = strtolower($request->getParam ( 'protocol' ));
+		$user->updateSSRProtocol ( $SSRProtocol );
+		$res ['ret'] = 1;
+		return $this->echoJson ( $response, $res );
+	}
+	public function updateSSRobfs($request, $response, $args) 
+	{
+		$user = Auth::getUser ();
+		$SSRobfs = strtolower($request->getParam ( 'obfs' ));
+		$user->updateSSRobfs ( $SSRobfs );
+		$res ['ret'] = 1;
+		return $this->echoJson ( $response, $res );
+	}
+		    
     public function logout($request, $response, $args)
     {
         Auth::logout();
         $newResponse = $response->withStatus(302)->withHeader('Location', '/auth/login');
+        error_log($newResponse);
         return $newResponse;
     }
 

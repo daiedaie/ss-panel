@@ -23,7 +23,17 @@ class Node extends Model
         }
         return $log;
     }
-
+    
+    /// ????
+	public function getNodeError() 
+	{
+		$errorcheck = ( int ) ($this->getLastNodeInfolog ()->log_time);
+		if ((time () - $errorcheck) > 600 || $errorcheck = null) {
+			return "false";
+		}
+		return "ture";
+	}
+    		
     public function getNodeUptime()
     {
         $log = $this->getLastNodeInfoLog();
@@ -87,7 +97,7 @@ class Node extends Model
             "camellia-128-cfb" => "camellia-128-cfb",
             "camellia-192-cfb" => "camellia-192-cfb",
             "camellia-256-cfb" => "camellia-256-cfb",
-            "chacha20" => "chacha20",
+            "chacha20（推荐）" => "chacha20",
             "salsa20" => "salsa20",
             "chacha20-ietf" => "chacha20-ietf",
             "aes-128-gcm" => "aes-128-gcm",
@@ -95,5 +105,28 @@ class Node extends Model
             "aes-256-gcm" => "aes-256-gcm",
             "chacha20-ietf-poly1305" => "chacha20-ietf-poly1305",
         ];
+    }
+    
+    public static function getProtocolList()
+    {
+    	return [
+    	"" => "origin",
+    	"origin（默认）" => "origin",
+    	"verify_simple" => "verify_simple",
+    	"auth_simple" => "auth_simple",
+    	"auth_sha1" => "auth_sha1",
+    	"auth_sha1_v2（推荐）" => "auth_sha1_v2",
+    	];
+    } 
+
+    public static function getObfsList()
+    {
+    	return [
+    	"" => "plain",
+    	"plain（默认）" => "plain",
+    	"http_simple" => "http_simple",
+    	"tls1.0_session_auth（推荐）" => "tls1.0_session_auth",
+    	"tls1.2_ticket_auth" => "tls1.2_ticket_auth",
+    	];
     }
 }

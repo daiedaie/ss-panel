@@ -70,7 +70,7 @@ class Tools
     public static function genRandomChar($length = 8)
     {
         // 密码字符集，可任意添加你需要的字符
-        $chars = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $char = '';
         for ($i = 0; $i < $length; $i++) {
             $char .= $chars[mt_rand(0, strlen($chars) - 1)];
@@ -205,4 +205,15 @@ class Tools
         }
         return $user->port;
     }
+    
+    
+	public static function base64_url_encode($input) 
+	{
+		return strtr ( base64_encode ( $input ), '+/', '-_' );
+	}
+	
+	public static function base64_url_decode($input) 
+	{
+		return base64_decode ( strtr ( $input, '-_', '+/' ) );
+	}
 }

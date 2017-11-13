@@ -109,14 +109,15 @@
                                 </div>
                             </div>
 
+                            <!-- method -->
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">加密方式</label>
 
                                 <div class="col-sm-9">
                                     <div class="input-group">
                                         <select class="form-control" id="method">
-                                        {foreach $method as $cipher}
-                                           <option value="{$cipher}" {if $user->method==$cipher}selected="selected"{/if} >{$cipher}</option>  
+                                        {foreach $method as $cipher_desc => $cipher}
+                                           <option value="{$cipher}" {if $user->method==$cipher}selected="selected"{/if} >{$cipher_desc}</option>  
                                         {/foreach}
                                         </select>  
                                         <div class="input-group-btn">
@@ -125,9 +126,45 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <!-- protocol -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">协议插件</label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <select class="form-control" id="protocol">
+                                        {foreach $protocol as $proto_desc => $proto}
+                                           <option value="{$proto}" {if $user->protocol==$proto}selected="selected"{/if} >{$proto_desc}</option>  
+                                        {/foreach}
+                                        </select>  
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="protocol-update" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- obfs -->
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">混淆插件</label>
+
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <select class="form-control" id="obfs">
+                                        {foreach $obfs as $ob_desc => $ob}
+                                           <option value="{$ob}" {if $user->obfs==$ob}selected="selected"{/if} >{$ob_desc}</option>  
+                                        {/foreach}
+                                        </select>  
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="obfs-update" class="btn btn-primary">修改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
-                        <div class="callout callout-info">本页面目前不支持 "协议(protocal)" 和 "混淆(obfs)" 的自定义，如果您的客户端需要配置这两项内容，请分别填写 origin 和 plain , "加密方式(encrypt_method)"填写上面的加密方式内容即可. </div>
+                        <div class="callout callout-info">如果您的客户端不支持ShadowsocksR（SSR）协议，请不要修改“协议插件”和“混淆插件”，分别保持默认选项“origin”和“plain”或者留空即可。</div>
                         <div class="box-footer"></div>
                     </div>
                     <!-- /.box-body -->
@@ -214,6 +251,60 @@
                 dataType: "json",
                 data: {
                     method: $("#method").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#protocol-update").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "SSRProtocol",
+                dataType: "json",
+                data: {
+                    protocol: $("#protocol").val()
+                },
+                success: function (data) {
+                    if (data.ret) {
+                        $("#ss-msg-success").show();
+                        $("#ss-msg-success-p").html(data.msg);
+                    } else {
+                        $("#ss-msg-error").show();
+                        $("#ss-msg-error-p").html(data.msg);
+                    }
+                },
+                error: function (jqXHR) {
+                    alert("发生错误：" + jqXHR.status);
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#obfs-update").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "SSRobfs",
+                dataType: "json",
+                data: {
+                    obfs: $("#obfs").val()
                 },
                 success: function (data) {
                     if (data.ret) {

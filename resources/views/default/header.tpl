@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
     <title>{$config["appName"]}</title>
     <!-- CSS fonts.googleapis.com -->
-    <link href="//fonts.lug.ustc.edu.cn/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <link href="//fonts.lug.ustc.edu.cn/icon?family=Material+Icons" rel="stylesheet"> -->
     <link href="/assets/public/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="/assets/materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <nav class="grey darken-3" role="navigation">

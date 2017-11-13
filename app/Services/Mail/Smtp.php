@@ -18,16 +18,17 @@ class Smtp extends Base
     {
         $this->config = $this->getConfig();
         $mail = new PHPMailer;
-        //$mail->SMTPDebug = 3;                               // Enable verbose debug output
+        $mail->SMTPDebug = 0;                               // Enable verbose debug output
         $mail->isSMTP();                                      // Set mailer to use SMTP
         $mail->Host = $this->config['host'];  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
         $mail->Username = $this->config['username'];                 // SMTP username
         $mail->Password = $this->config['passsword'];                    // SMTP password
-        $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->SMTPSecure = '';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = $this->config['port'];                                    // TCP port to connect to
         $mail->setFrom($this->config['sender'], $this->config['name']);
         $mail->CharSet = 'UTF-8';
+        
         $this->mail = $mail;
     }
     
@@ -49,16 +50,19 @@ class Smtp extends Base
      */
     public function send($to, $subject, $text, $file)
     {
+
         $mail = $this->mail;
         $mail->addAddress($to);     // Add a recipient
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $text;
         // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-        if (!$mail->send()) {
-            return true;
-        }
-        return false;
-    }
 
+        
+        if (!$mail->Send()) {
+        	error_log("发送失败 " . $mail->ErrorInfo);
+            return false;
+        }
+        return true;
+    }
 }

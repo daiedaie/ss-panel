@@ -70,6 +70,7 @@ class Auth
     public static function logout()
     {
         $sid = Cookie::get('sid');
+        error_log($sid);
         self::getCache()->del($sid);
     }
 }

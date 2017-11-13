@@ -67,20 +67,19 @@ class HomeController extends BaseController
 
     public function ip($request, $response, $args)
     {
-        $realip = ClientIP::getClientAddress();
-        $ipinfo = ClientIP::getIpDetail($realip);
-
-        return $this->view()->assign(
-                                'urls', 
-                                array( 
-                                 'Google(CDN)' => 'https://www.google.com', 
-                                 'Google(IS)'  => 'https://www.google.is', 
-                                 'Google(JP)'  => 'https://www.google.co.jp',
-                                 'Tumblr'  => 'https://www.tumblr.com',
-                                 'Amazon(DE)'  => 'https://www.amazon.de'
-                                )
-                              )->assign('ipinfo', $ipinfo)->display('ip.tpl');
-
-        //return $this->view()->assign('ipinfo', $ipinfo)->display('ip.tpl');
+        $realip = ClientIP::getClientAddress(); 
+        $urls = array( 
+					'Google(CDN)' => 'https://www.google.com', 
+					'Google(IS)'  => 'https://www.google.is', 
+					'Google(JP)'  => 'https://www.google.co.jp',
+					'Tumblr'  => 'https://www.tumblr.com',
+        		    'Facebook' => 'https://www.facebook.com',
+					'Amazon(DE)'  => 'https://www.amazon.de'
+                );
+        
+        return $this->view()
+                    ->assign('urls', $urls)
+                    ->assign('ip', $realip)
+                    ->display('ip.tpl');
     }
 }
